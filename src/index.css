@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.image-description {
+    display: none;
+}
+
+.bg-gray-200:hover .image-description {
+    display: block;
+}

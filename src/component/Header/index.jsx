@@ -23,11 +23,18 @@ const Header = () => {
 
     const handleDownload = () => {
         const link = document.createElement('a');
-        link.href = '../../data.json'; 
+        link.href = '../../data.json';
         link.download = 'data.json';
-    
+
         link.click();
-      };
+    };
+
+    const handleImageHover = (index, isHovered) => {
+        const element = document.getElementById(`description-${index}`);
+        if (element) {
+            element.style.display = isHovered ? 'block' : 'none';
+        }
+    };
 
     return (
         <div>
@@ -43,24 +50,33 @@ const Header = () => {
                 </div>
             </header>
             <div class="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-4 bg-[#1F2229] px-4 py-2 max-[640px]:gap-y-10">
-                {
-                    filteredData.map((item) => {
-                        return (
-                            <div className="bg-gray-200 relative cursor-default" title={item.name}>
-                                <div className=''>
-                                    <img src={item.image} alt={item.name} className='w-full'/>
-                                </div>
-                                <div className='absolute top-2 right-2 text-xl'>
-                                    <LikeButton itemId={item.id}/>
-                                </div>
-                                <div>
-                                    <h2 className='hidden max-[768px]:block text-xl font-semibold underline'>{item.name}</h2>
-                                    <p className='text-base font-normal first-letter:text-5xl first-letter:font-semibold'>{item.description}</p>
-                                </div>
+                {filteredData.map((item, index) => {
+                    return (
+                        <div
+                            className="bg-gray-200 relative cursor-default"
+                            title={item.name}
+                            onMouseEnter={() => handleImageHover(index, true)}
+                            onMouseLeave={() => handleImageHover(index, false)}
+                        >
+                            <div className=''>
+                                <img src={item.image} alt={item.name} className='w-full' />
                             </div>
-                        )
-                    })
-                }
+                            <div className='absolute top-2 right-2 text-xl'>
+                                <LikeButton itemId={item.id} />
+                            </div>
+                            <div>
+                                <h2 className='text-xl font-semibold underline'>{item.name}</h2>
+                                <p
+                                    id={`description-${index}`}
+                                    className="text-base font-normal first-letter:text-5xl first-letter:font-semibold"
+                                    style={{ display: 'none' }}
+                                >
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
