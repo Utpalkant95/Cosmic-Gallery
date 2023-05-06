@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import data from "../../data.json";
 import logo from "../../Assests/img/logo.avif";
-import LikeButton from '../LikeButton';
+import LikeControl from '../LikeControl';
 
 const Header = () => {
     const [filter, setFilter] = useState('');
 
-    const handleFilterChange = (event) => {
+    const OnChangeInput = (event) => {
         setFilter(event.target.value);
     };
 
@@ -29,7 +29,7 @@ const Header = () => {
         link.click();
     };
 
-    const handleImageHover = (index, isHovered) => {
+    const ImageHover = (index, isHovered) => {
         const element = document.getElementById(`description-${index}`);
         if (element) {
             element.style.display = isHovered ? 'block' : 'none';
@@ -43,7 +43,7 @@ const Header = () => {
                     <img src={logo} alt="logo" />
                 </div>
                 <div>
-                    <input type="text" placeholder='Search...' className='w-96 py-1 px-2 rounded-full focus:ring-0 border-none outline-none max-[620px]:w-56' value={filter} onChange={handleFilterChange} />
+                    <input type="text" placeholder='Search...' className='w-96 py-1 px-2 rounded-full focus:ring-0 border-none outline-none max-[620px]:w-56' value={filter} onChange={OnChangeInput} />
                 </div>
                 <div className='flex items-center gap-x-8 cursor-pointer text-lg'>
                     <span className='text-[#9AA1B2]' onClick={handleDownload}>Data</span>
@@ -55,14 +55,14 @@ const Header = () => {
                         <div
                             className="bg-gray-200 relative cursor-default"
                             title={item.name}
-                            onMouseEnter={() => handleImageHover(index, true)}
-                            onMouseLeave={() => handleImageHover(index, false)}
+                            onMouseEnter={() => ImageHover(index, true)}
+                            onMouseLeave={() => ImageHover(index, false)}
                         >
                             <div className=''>
                                 <img src={item.image} alt={item.name} className='w-full' />
                             </div>
                             <div className='absolute top-2 right-2 text-xl'>
-                                <LikeButton itemId={item.id} />
+                                <LikeControl itemId={item.id} />
                             </div>
                             <div>
                                 <h2 className='text-xl font-semibold underline'>{item.name}</h2>
